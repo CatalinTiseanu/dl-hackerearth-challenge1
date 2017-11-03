@@ -1,16 +1,16 @@
-Deep learning competition on grocery images dataset
+# Deep learning competition on grocery images dataset
 
 By (in alphabetical order): Alexandru Hodorogea, Andrei Olariu, Catalin Tiseanu
 
-Synopsis
+## Synopsis
 
 We competed in a DL competition in which we finished in 7th place with an accuracy of 95%
 
-The problem
+## The problem
 
 The task was an image classification problem, on a 5000 images dataset with 27 classes. It was run on HackerEarth, in a style similar to Kaggle: https://www.hackerearth.com/challenge/competitive/deep-learning-challenge-1/?utm_source=challenges-modern&utm_campaign=registered-challenges&utm_medium=right-panel There is an existing paper about the dataset (we found out about this later in the competition). https://arxiv.org/abs/1611.05799 [1611.05799] The Freiburg Groceries Dataset Abstract: With the increasing performance of machine learning techniques in the last few years, the computer vision and robotics communities have created a large number of datasets for benchmarking object recognition tasks. The authors get 78.9% accuracy.
 
-Overview
+## Overview
 
 We used Keras. We started by using pretrained models (VGG16, VGG19, Resnet50, ResnetV2) in Keras, adding dense layers on top:
 
@@ -43,7 +43,7 @@ train_datagen = ImageDataGenerator(
 )
 The general process was: Start with training a model like above with not augmentation for ~10 epochs. As soon as it started to overfit (validation accuracy started lagging behind training accuracy), stop the training. Add some augmentation (using code similar to the above), and do the same thing. As soon as it start to overfit, add more aggressive augmentation (bigger rotations, shifts, scaling, zooms, etc) and so on. Repeat this for around 6 - 7 cycles. With this we reached single model performance (accuracy given by using a single CNN model) of about 91-92%. What also helped a lot (described more below): Ensembling and Augmented Prediction
 
-Lessons
+## Lessons
 
 Taking out of box models (pre-trained deep nets) give you around 80% accuracy With extra work, tuning and insights, a gain of up to 15% is possible, reflecting our final score of 95%, starting from ~ 80% - this was the single most surprising insight for me (that extra work / insights produce such a large gain, even when starting with the latest, hottest pre-trained networks). The main factors contributing to that gain are, in decreasing order of importance:
 
@@ -54,6 +54,8 @@ What didn’t work / didn't try
 
 Pseudo-labeling: Try to assign labels to images in the test set in order to use them in the training process (enrich the labeled dataset by guessing labels for the test set).
 Different methods of Ensembling. Instead of using a voting Ensemble (multiple models vote on the label for a test image; the label with the most votes wins) use a standard ML algorithm on top (such as Gradient Boosting Trees or Logistic Regression). I plan to try this since Ensembling methods are key to squeezing out more performance in almost any ML task.
+
+## References
 
 [1] https://www.hackerearth.com/challenge/competitive/deep-learning-challenge-1/  
 [2] http://webmining.olariu.org/top-ten-finish-in-the-deep-learning-hackerearth-challenge  
