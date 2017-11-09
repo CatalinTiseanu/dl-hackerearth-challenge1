@@ -14,6 +14,7 @@ The task was an image classification problem, on a 5000 images dataset with 27 c
 
 We used Keras. We started by using pretrained models (VGG16, VGG19, Resnet50, ResnetV2) in Keras, adding dense layers on top:
 
+```
 base_model = applications.InceptionResNetV2( \
     weights='imagenet', include_top=False, input_shape=x_train.shape[1:])
 
@@ -30,8 +31,10 @@ model.compile(loss='sparse_categorical_crossentropy', optimizer=optimizers.Adam(
                   metrics=['accuracy'])
 
 base_model.trainable = False
+```
 We froze the pre-trained layers and trained this for an accuracy of 80%. The next step was to add image augmentation, using something like:
 
+```
 train_datagen = ImageDataGenerator(
         rotation_range=30,
         width_shift_range=0.1,
@@ -41,6 +44,8 @@ train_datagen = ImageDataGenerator(
         horizontal_flip=True,
         vertical_flip=True,
 )
+```
+
 The general process was: Start with training a model like above with not augmentation for ~10 epochs. As soon as it started to overfit (validation accuracy started lagging behind training accuracy), stop the training. Add some augmentation (using code similar to the above), and do the same thing. As soon as it start to overfit, add more aggressive augmentation (bigger rotations, shifts, scaling, zooms, etc) and so on. Repeat this for around 6 - 7 cycles. With this we reached single model performance (accuracy given by using a single CNN model) of about 91-92%. What also helped a lot (described more below): Ensembling and Augmented Prediction
 
 ## Lessons
