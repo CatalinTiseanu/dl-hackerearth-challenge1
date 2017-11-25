@@ -4,7 +4,7 @@ By (in alphabetical order): Alexandru Hodorogea, Andrei Olariu, Catalin Tiseanu
 
 ## Synopsis
 
-We competed in a DL competition in which we finished in 7th place with an accuracy of 95%
+We competed in a image classification competition in which we finished in 7th place with an accuracy of 95%. The dataset was composed from grocery products on shelves.
 
 ## The problem
 
